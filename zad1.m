@@ -14,3 +14,4 @@ title('Sprawdzenie wartości punktu pracy')
 xlabel('k')
 ylabel('Wyjście')
 matlab2tikz ('test_punktu_pracy.tex' , 'showInfo' , false) 
+
