@@ -33,7 +33,6 @@ for k=12:kk
  y(k)=symulka(u(k-10),u(k-11),y(k-1),y(k-2));
  e(k)=yzad(k)-y(k);
  u(k)=r2*e(k-2)+r1*e(k-1)+r0*e(k)+u(k-1);
-deltau = u(k) - u(k-1);
 
 %% Skalowanie wartości u
 
