@@ -31,8 +31,8 @@ scaled_u(1:kk) = 0;
 for k=12:kk
  y(k)=symulka(u(k-10),u(k-11),y(k-1),y(k-2));
  e(k)=yzad(k)-y(k);
- u(k)=r2*e(k-2)+r1*e(k-1)+r0*e(k)+u(k-1);
- u(k) = max(min(min(abs(scaled_u(k)-scaled_u(k-1)), ...
+ scaled_u(k)=r2*e(k-2)+r1*e(k-1)+r0*e(k)+scaled_u(k-1);
+ u(k) = max(min(max(abs(scaled_u(k)-scaled_u(k-1)), ...
      abs(deltaumax)) * sign(scaled_u(k) - scaled_u(k-1)) + ...
      u(k) +scaled_u(k-1),Umax),Umin)
 
