@@ -30,7 +30,7 @@ yzad(763:898) = 0.98;
 yzad(899:1000) = 0.59;
 %% Pętla regulatora
 for k=12:kk
- y(k)=symulka(u(k-10),u(k-11),y(k-1),y(k-2));
+ y(k)=symulacja_obiektu4y_p1(u(k-10),u(k-11),y(k-1),y(k-2));
  e(k)=yzad(k)-y(k);
  u(k)=r2*e(k-2)+r1*e(k-1)+r0*e(k)+u(k-1);
 
