@@ -7,9 +7,20 @@ Tp=0.5;
 deltaumax = 0.03;
 
 %% Parametry regulatora PID
-Kp = 1.7;
-Ti =13;
-Td = 0.9;
+%Random
+% Kp = 1.7;
+% Ti =13;
+% Td = 0.9;
+
+%Ziegler-Nichols
+Kp = 3.2;
+Ti = 11.5;
+Td = 2.625;
+
+%Ziegler-Nichols Updated
+% Kp = 3.9;
+% Ti = 10.5;
+% Td = 2.625;
 
 %% Wyznaczone wartości r1,r2,r0
 r1 = Kp*((Tp/(2*Ti)) -2 *(Td/Tp) -1);
@@ -50,7 +61,7 @@ stairs(t,u,'LineWidth',1.5, Color='r');
 title('u - sterowanie'); 
 xlabel('k - number próbki');
 ylabel("Wartość sterowania")
-matlab2tikz ('zad4PID_u.tex' , 'showInfo' , false)
+% matlab2tikz ('zad4PID_u.tex' , 'showInfo' , false)
 figure
 stairs(t,y,'LineWidth',1.5); 
 hold on;
@@ -59,4 +70,4 @@ title('Charakterystyki y,y_{zad}');
 xlabel('k - number próbki');
 ylabel('Wartość')
 legend("Wartość na wyjściu y", "Wartość zadana y_{zad}",Location="southwest")
-matlab2tikz ('zad4PID_y.tex' , 'showInfo' , false) 
+% matlab2tikz ('zad4PID_y.tex' , 'showInfo' , false) 
