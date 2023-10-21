@@ -27,4 +27,3 @@ ylabel('s_k')
 plot(s);
 hold off;
 matlab2tikz ('zad3_s.tex' , 'showInfo' , false) 
-
