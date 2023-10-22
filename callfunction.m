@@ -3,10 +3,17 @@
     % N =86;
     % Nu =33;
     %70 70 1
-    lambda = 0.1471;
-    N =95;
-    Nu =45;
-    D =120;
+    %% start 10 lot of jumps
+    lambda = 0.0235;
+    %% start 10 less jumps
+%     lambda = 0.2063;
+    %% start 10 one jump
+%     lambda = 0.1052;
+%% start 10 two jumps
+    lambda = 0.2107;
+    D =140;
+    N =30;
+    Nu =10;
     Upp = 2;
     Ypp = 0.8;
     Umin= 1.2;
@@ -22,13 +29,13 @@
 
 [u, y, e] = dmcfunction(Upp, Ypp,s, yzad, D, N, Nu, lambda, deltaumax, Umin, Umax);
  %% Wizualizacja
-t = linspace(1,kk,kk);
-figure; 
-stairs(t,u,'LineWidth',1.5, Color='r');
-title('u - sterowanie'); 
-xlabel('k - number próbki');
-ylabel("Wartość sterowania")
-matlab2tikz ('zad4DMC_u_popraw.tex' , 'showInfo' , false)
+% t = linspace(1,kk,kk);
+% figure; 
+% stairs(t,u,'LineWidth',1.5, Color='r');
+% title('u - sterowanie'); 
+% xlabel('k - number próbki');
+% ylabel("Wartość sterowania")
+% matlab2tikz ('zad4DMC_u_popraw.tex' , 'showInfo' , false)
 figure; 
 stairs(t,y,'LineWidth',1.5); 
 hold on;
@@ -37,4 +44,4 @@ title('Charakterystyki y,y_{zad}');
 xlabel('k - number próbki');
 ylabel('Wartość')
 legend("Wartość na wyjściu y", "Wartość zadana y_{zad}",Location="southeast")
-matlab2tikz ('zad4DMC_y_popraw.tex' , 'showInfo' , false)
+% matlab2tikz ('zad4DMC_y_popraw.tex' , 'showInfo' , false)
