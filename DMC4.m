@@ -1,10 +1,8 @@
-%% Parametry zadania
 Upp = 2;
 Ypp = 0.8;
 Umin= 1.2;
 Umax = 2.8;
 deltaumax = 0.03;
-
 %% Parametry regulatora DMC
 N =102;
 Nu =102;
@@ -21,12 +19,10 @@ yzad(261:451)= 0.67;
 yzad(452:762) = 0.7;
 yzad(763:898) = 0.98;
 yzad(899:1000) = 0.59;
-
 %% Inicjalizacja wektorów
 u(1:kk)=Upp; 
 y(1:kk)=Ypp;
 e(1:D-1)=0;
-
 %% Macierz M
 for i= 1:N
     for j = 1:Nu
@@ -35,14 +31,12 @@ for i= 1:N
         end
     end
 end
-
 %% Macierz Mp
 for i = 1:N
     for j = 1:D-1
         Mp(i,j) = s(min(i+j,D)) - s(j);
     end
 end
-
 %% Wyznaczenie K i dobranie parametrów kary
 lambda = 180;
 Gamma = eye(N,N);
@@ -52,7 +46,6 @@ K = inv(M' * Gamma * M + Alpha) * M' * Gamma;
 %% Inicjalizacja wektora du i współczynniki równania różnciowego
 du = zeros(0:12);
 counter = 2;
-
 %% Główna pętla regulatora
 for k=D:kk
  dUp = [];
@@ -60,15 +53,9 @@ for k=D:kk
  e(k)=yzad(k)-y(k);
  Yzadk = yzad(k) *ones(N,1);
  Yk = y(k) *ones(N,1);
- 
-%% Skalowanie wartości u
-
-% Sprawdzenie czy skok znajduje się w przedziale
-deltau = u(k) - u(k-1);
-u(k) = u(k-1) + min(abs(deltau), abs(deltaumax)) * sign(deltau);
-
-% Sprawdzenie czy U znajduje się w przedziale, ew. ścięcie
-u(k) = max(min(u(k),Umax),Umin);
+ deltau = u(k) - u(k-1);
+ u(k) = u(k-1) + min(abs(deltau), abs(deltaumax)) * sign(deltau);
+ u(k) = max(min(u(k),Umax),Umin);
  for i=1:D-1
      if (k-i-1) > 0
         dUp = [dUp;u(k-i) - u(k-i-1)];
