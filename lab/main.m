@@ -5,17 +5,29 @@ kk = y_size(1);
 u(1:kk) = 39;
 u(1) = 32;
 yx = model(u,y(:,4),kk);
-plot(yx);
-hold on
-plot(y)
+% plot(yx);
+% hold on
+% plot(y)
+t = linspace(1,kk,kk);
+err = sum((transpose(y(:,4)) -yx).^2);
+figure
+stairs(t,yx,'LineWidth',1)
+hold on;
+stairs(t,y,'LineWidth',1, 'LineStyle','-');
+title('Charakterystyki y,y_{zad}'); 
+xlabel('k - number próbki');
+ylabel('Wartość')
+legend("Odpowiedź skokowa", "Aproksymowana odpowiedź skokowa  skokowa", location='southeast')
+hold off
+matlab2tikz ('zad3_lab_odpowiedz_skok_approx_2.tex' , 'showInfo' , false)
 function y_w = model(u, y, kk)
 % T1 = 0.0002;
 % T2 = 107.1386;
 % K = 0.9339;
-T1 =107.1369;
-T2 = 0.0011;
-K = 0.9339;
-Td = 17;
+T1 =1.0001;
+T2 =108.0218;
+K =  0.9340 ;
+Td = 15;
 alfa1 = exp(-1/T1);
 alfa2 =exp(-1/T2);
 y_w(1:kk) = y(1);
@@ -29,7 +41,7 @@ end
 end
 
 function s = get_s(sim_end)
-    Ypp = 32.5;
+    Ypp = 32.68;
     Upp = 29;
     y = readmatrix("pqfile.txt");
     y = y(:, 4);

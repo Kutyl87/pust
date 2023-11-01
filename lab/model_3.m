@@ -1,11 +1,10 @@
-a = fmincon(@calculate_transfer_parameters,[2, 3, 2], [], [], [], [], [0, 0, 0], [1000, 1000, 1000]);
+a = fmincon(@calculate_transfer_parameters,[0.35, 10, 20], [], [], [], [], [0, 1, 1], [1000, 1000, 1000]);
 function error = calculate_transfer_parameters(x)
     K = x(1);
     T1 = x(2);
     T2 = x(3);
-    Td = 17;
+    Td = 15;
     y = readmatrix("pqfile.txt");
-    % plot(y);
     y_size = size(y(:,4));
     kk = y_size(1);
     u(1:kk) = 39;
