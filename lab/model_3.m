@@ -8,7 +8,7 @@ function error = calculate_transfer_parameters(x)
     y_size = size(y(:,4));
     kk = y_size(1);
     u(1:kk) = 39;
-    u(1) = 32;
+    u(1) = 29;
     y_w = model(u,y(:,4),kk,Td, K, T1, T2);
     error = calculate_square_error(y(:,4),transpose(y_w));
     % error
