@@ -1,17 +1,30 @@
-kk=1200;
+plot(get_s(700))
+
+kk=12000;
 yzad(1:51)=32.5;
-yzad(52:451)=35;
-yzad(452:kk) = 45;
+yzad(52:kk)=35;
+% 
+[u, y, e] = dmcfunction(29, 32.68, get_s(770), yzad, 770, 300, 300, 1000, 1, 0, 90);
+plot(y)
+figure
+plot(u)
 
-
-[u, y, e] = dmcfunction(29, 32.68, get_s(770), yzad, 300, 50, 40, 1, 10, 0, 90)
-
-
+function y_w = mod(u, y, k, Td, Ks,T1, T2)
+    alfa1 = exp(-1/T1);
+    alfa2 =exp(-1/T2);
+    a1 = -alfa1-alfa2;
+    a2 = alfa1*alfa2;
+    b1 = (Ks / (T1 - T2)) * (T1*(1-alfa1) - T2*(1-alfa2));
+    b2 = (Ks/(T1 - T2)) * (alfa1 * T2 *(1-alfa2) - alfa2*T1*(1-alfa1));
+    y_w = b1*u(k - Td - 1) + b2*u(k- Td -2) - a1*y(k- 1) - a2*y(k - 2);
+end
 
 function [u, y, e] = dmcfunction(Upp, Ypp, s,yzad, D, N, Nu, lambda, deltaumax, Umin, Umax)
     % Inicjalizacja wektorów
-    addpath('D:\SerialCommunication'); % add a path to the functions
-    initSerialControl COM13 % initialise com port
+    Td = 15;
+    Ks = 0.9339;
+    T1 = 105.4817;
+    T2 = 1.0003;
     kk = length(yzad);
     u = zeros(1, kk);
     y = zeros(1, kk);
@@ -48,9 +61,9 @@ function [u, y, e] = dmcfunction(Upp, Ypp, s,yzad, D, N, Nu, lambda, deltaumax, 
     du = zeros(1, 12);
 
     % Główna pętla regulatora
-    for k = 12:kk
+    for k = 720:kk
         dUp = [];
-        y(k) = readMeasurements(1);
+        y(k) = mod(u, y, k, Td, Ks, T1, T2);
         e(k) = yzad(k) - y(k);
         Yzadk = yzad(k) * ones(N, 1);
         Yk = y(k) * ones(N, 1);
@@ -66,20 +79,6 @@ function [u, y, e] = dmcfunction(Upp, Ypp, s,yzad, D, N, Nu, lambda, deltaumax, 
 
         % Sprawdzenie czy U znajduje się w przedziale, ew. ścięcie
         u(k) = max(min(u(k), Umax), Umin);
-        sendControls([5], [u(k)]);
-        waitForNewIteration();
-        refreshdata
-        drawnow
-        plot(y)
-        hold on;
-        t = linspace(1,kk,kk);
-        stairs(t,yzad,'LineWidth',1, 'LineStyle','--');
-        title('Charakterystyki y,y_{zad}'); 
-        xlabel('k - number próbki');
-        ylabel('Wartość')
-        legend("Wartość na wyjściu y", "Wartość zadana y_{zad}")
-        hold off
-        matlab2tikz ('zad5_dmc.tex' , 'showInfo' , false)   
 
         % Wprowadzenie zmian wartości zadanej
     end
