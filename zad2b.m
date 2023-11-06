@@ -1,3 +1,4 @@
+sim_end = 500;
 possible_u = [1.2:0.01:2.8];
 stat_y = [];
 for i= 1:size(possible_u, 2)

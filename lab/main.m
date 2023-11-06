@@ -39,14 +39,3 @@ for k=Td+3:kk
 y_w(k) = b1*u(k - Td - 1) + b2*u(k- Td -2) - a1*y_w(k- 1) - a2*y_w(k - 2);
 end
 end
-
-function s = get_s(sim_end)
-    Ypp = 32.68;
-    Upp = 29;
-    y = readmatrix("pqfile.txt");
-    y = y(:, 4);
-    s = zeros(1, sim_end);
-    for i=1:length(s)
-        s(i) = (y(i) - Ypp) / (39 - Upp);
-    end
-end
